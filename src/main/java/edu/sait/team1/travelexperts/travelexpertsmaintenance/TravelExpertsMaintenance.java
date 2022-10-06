@@ -1,14 +1,17 @@
 package edu.sait.team1.travelexperts.travelexpertsmaintenance;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
+/**
+ * TravelExpertsMaintenance.java
+ * The entry point to our database application.
+ * James B., Ali H., Trevor P., Evan D.
+ * Fall 2022
+ */
 public class TravelExpertsMaintenance extends Application {
 
     @Override

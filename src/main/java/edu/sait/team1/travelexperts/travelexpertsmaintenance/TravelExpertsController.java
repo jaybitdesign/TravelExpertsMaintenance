@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
-
 import java.net.URL;
 import java.util.*;
 
@@ -15,31 +14,22 @@ public class TravelExpertsController {
 
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private Button buttonAdd;
-
     @FXML
     private Button buttonDelete;
-
     @FXML
     private Button buttonEdit;
-
     @FXML
     private Button buttonExit;
-
     @FXML
     private Button buttonView;
-
     @FXML
     private ChoiceBox<?> choiceBoxTable;
-
     @FXML
     private TableView<?> tableViewTable;
-
 
     @FXML
     void initialize() {
@@ -51,6 +41,7 @@ public class TravelExpertsController {
         assert choiceBoxTable != null : "fx:id=\"choiceBoxTable\" was not injected: check your FXML file 'travel-experts.fxml'.";
         assert tableViewTable != null : "fx:id=\"tableViewTable\" was not injected: check your FXML file 'travel-experts.fxml'.";
 
+        TravelExpertsHandler handler = new TravelExpertsHandler();
 
         // TODO Disable buttons until a table is chosen and an item selected
 
@@ -59,7 +50,6 @@ public class TravelExpertsController {
         // TODO Create delete function that is fired when "delete" is clicked. Prompt user to make sure.
 
         // TODO JAMES DONE Handle change of selection on choice box
-        TravelExpertsHandler handler = new TravelExpertsHandler();
         choiceBoxTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
@@ -74,43 +64,8 @@ public class TravelExpertsController {
 
         // TODO JAMES DONE Loop through "tables" array to populate the ChoiceBox with choices of tables to edit
         // TODO JAMES DONE Replace " " with "" and "-" with "_" when referencing tables in a hashmap
-        for (int i = 0; i < TABLE_LABELS.length; i++) {
-            var table = TABLE_LABELS[i].replaceAll(" ", "").replaceAll("-", "_").toLowerCase();
-            TABLE_NAMES.put(TABLE_LABELS[i], table);
-            //System.out.println(TABLE_LABELS[i]);
-        }
-        ObservableList tables = FXCollections.observableArrayList(Arrays.stream(TABLE_LABELS).toArray());
-        choiceBoxTable.setItems(tables);
+        handler.mapLabelsToNames(choiceBoxTable);
 
     }
-
-    private final String[] TABLE_LABELS = {
-            "Affiliations",
-            "Agencies",
-            "Agents",
-            "Booking Details",
-            "Bookings",
-            "Classes",
-            "Credit Cards",
-            "Customers",
-            "Customers-Rewards",
-            "Fees",
-            "Packages",
-            "Packages-Products-Suppliers",
-            "Products",
-            "Products-Suppliers",
-            "Regions",
-            "Rewards",
-            "Supplier Contacts",
-            "Suppliers",
-            "Trip Types"
-    };
-
-
-    public static HashMap<String, String> getTableNames() {
-        return TABLE_NAMES;
-    }
-    public static HashMap<String, String> TABLE_NAMES = new HashMap<>();
-
 
 }

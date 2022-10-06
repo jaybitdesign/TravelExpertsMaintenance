@@ -11,9 +11,10 @@ import java.sql.*;
 public class DatabaseConnection {
 
     /** Define our connection string. */
-    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/travelexperts";
+    private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306";
 
     /** Define our username and password. */
+    private static final String DATABASE = "travelexperts";
     private static final String USER = "admin";
     private static final String PASS = "password";
 
@@ -24,7 +25,7 @@ public class DatabaseConnection {
      */
     private static Connection getConnection() {
         try {
-            return DriverManager.getConnection(CONNECTION_STRING, USER, PASS);
+            return DriverManager.getConnection(CONNECTION_STRING + "/" + DATABASE, USER, PASS);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -61,7 +62,7 @@ public class DatabaseConnection {
      * @return ResultSet from our executed SQL.
      * James B.
      */
-    public ResultSet executeStatement(String statement, String[] parameters) {
+    public static ResultSet executeStatement(String statement, String[] parameters) {
         try {
 
             /** Define a new PreparedStatement. */

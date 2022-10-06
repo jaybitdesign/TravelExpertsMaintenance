@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +52,7 @@ public class TravelExpertsHandler {
     /**
      * -> getTableNames()
      * @return the table names HashMap.
+     * James B.
      */
     public static HashMap<String, String> getTableNames() { return TABLE_NAMES; }
 
@@ -72,7 +74,7 @@ public class TravelExpertsHandler {
 
         /** Updates the TableView with the ResultSet. */
         try {
-            updateTable(rs, tv);
+            updateTableView(rs, tv);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -86,14 +88,14 @@ public class TravelExpertsHandler {
      * @throws SQLException
      * James B.
      */
-    public static void updateTable(ResultSet rs, TableView tv) throws SQLException {
-
-        /** Create an empty ObservableList object. */
-        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+    public static void updateTableView(ResultSet rs, TableView tv) throws SQLException {
 
         /** Clear any existing columns & items. */
         tv.getColumns().clear();
         tv.getItems().clear();
+
+        /** Create an empty ObservableList object. */
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
 
         /** Loop through the ResultSet metadata with the column count to add the columns. */
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
@@ -104,10 +106,8 @@ public class TravelExpertsHandler {
             /** Create a new TableColumn object with the name determined by the iterator. */
             TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i+1));
 
-            /** Ensure the column data is not null. */
+            /** Return a new SimpleStringProperty if not null, otherwise return a blank SimpleStringProperty. */
             col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-
-                /** Return a new SimpleStringProperty if not null, otherwise return a blank SimpleStringProperty. */
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
                     if(param.getValue().get(j) != null) { return new SimpleStringProperty(param.getValue().get(j).toString()); }
                     else { return new SimpleStringProperty(""); }
@@ -129,10 +129,9 @@ public class TravelExpertsHandler {
 
                 /** Add the column data to the row. */
                 row.add(rs.getString(i));
-
             }
 
-            /** Add the row to the data. */
+            /** Add the row to the data object. */
             data.add(row);
         }
 
@@ -147,7 +146,7 @@ public class TravelExpertsHandler {
      * @param choiceBoxTable
      * James B.
      */
-    public void mapLabelsToNames(ChoiceBox<?> choiceBoxTable) {
+    public void mapChoiceBox(ChoiceBox<?> choiceBoxTable) {
 
         /** Loop through the table labels. */
         for (int i = 0; i < TABLE_LABELS.length; i++) {
@@ -164,5 +163,71 @@ public class TravelExpertsHandler {
         choiceBoxTable.setItems(tables);
     }
 
+    /**
+     * -> disableButtons()
+     * Disables all buttons.
+     * @param buttons
+     * James B.
+     */
+    public void disableButtons(Button[] buttons) {
+        for (Button button: buttons) {
+            button.setDisable(true);
+        }
+    }
 
+    /**
+     * -> enableButtons()
+     * Enables all buttons.
+     * @param buttons
+     * James B.
+     */
+    public void enableButtons(Button[] buttons) {
+        for (Button button: buttons) {
+            button.setDisable(false);
+        }
+    }
+
+    /**
+     * ->
+     * > desc <
+     * @param columns
+     * @param selectedItem
+     * > author <
+     */
+    public void handleViewEvent(ObservableList<? extends TableColumn<?,?>> columns, Object selectedItem) {
+
+    }
+
+    /**
+     * ->
+     * > desc <
+     * @param columns
+     * @param selectedItem
+     * > author <
+     */
+    public void handleAddEvent(ObservableList<? extends TableColumn<?,?>> columns, Object selectedItem) {
+
+    }
+
+    /**
+     * ->
+     * > desc <
+     * @param columns
+     * @param selectedItem
+     * > author <
+     */
+    public void handleEditEvent(ObservableList<? extends TableColumn<?,?>> columns, Object selectedItem) {
+
+    }
+
+    /**
+     * ->
+     * > desc <
+     * @param columns
+     * @param selectedItem
+     * > author <
+     */
+    public void handleDeleteEvent(ObservableList<? extends TableColumn<?,?>> columns, Object selectedItem) {
+
+    }
 }

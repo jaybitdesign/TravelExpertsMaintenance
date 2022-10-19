@@ -13,7 +13,7 @@ public class DatabaseConnection {
     /** Define our connection string. */
     private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306";
 
-    /** Define our username and password. */
+    /** Define our database, username and password. */
     private static final String DATABASE = "travelexperts";
     private static final String USER = "admin";
     private static final String PASS = "password";
@@ -25,9 +25,11 @@ public class DatabaseConnection {
      */
     private static Connection getConnection() {
         try {
+
             return DriverManager.getConnection(CONNECTION_STRING + "/" + DATABASE, USER, PASS);
+
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println("SQL Error Code: " + ex.getErrorCode() + " / " + ex.getSQLState());
         }
         return null;
     }
@@ -42,16 +44,21 @@ public class DatabaseConnection {
     public static ResultSet executeStatement(String statement) {
         try {
             /** Define a new PreparedStatement. */
-            PreparedStatement preparedStatement = getConnection().prepareStatement(statement);
+            if(getConnection() != null) {
+                PreparedStatement preparedStatement = getConnection().prepareStatement(statement);
 
-            /** Execute the prepared statement. */
-            preparedStatement.execute();
+                /** Execute the prepared statement. */
+                preparedStatement.execute();
 
-            /** Return the result set */
-            return preparedStatement.getResultSet();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                /** Return the result set */
+                return preparedStatement.getResultSet();
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQL Error Code: " + ex.getErrorCode() +  " / " + ex.getSQLState());
+            ex.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -78,9 +85,10 @@ public class DatabaseConnection {
 
             /** Return the result set */
             return preparedStatement.getResultSet();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException ex) {
+            System.out.println("SQL Error Code: " + ex.getErrorCode() + " / " + ex.getSQLState());
         }
+        return null;
     }
 
 }

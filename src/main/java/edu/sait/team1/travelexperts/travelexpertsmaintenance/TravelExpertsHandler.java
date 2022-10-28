@@ -187,8 +187,22 @@ public class TravelExpertsHandler {
         }
     }
 
+    /**
+     * -> createNewView()
+     * Creates a new view with a certain function.
+     * @param function
+     * @param tableName
+     * @param columns
+     * @param selectedItem
+     * @param choiceBoxTable
+     * @param tableViewTable
+     * James B.
+     */
     public void createNewView(String function, String tableName, ObservableList<? extends TableColumn<?,?>> columns, ObservableList<?> selectedItem, ChoiceBox choiceBoxTable, TableView tableViewTable) {
 
+        /**
+         * Create a new cancel alert
+         */
         Alert confirmCancel = new Alert(Alert.AlertType.WARNING);
         ButtonType yesConfirmCancel = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noConfirmCancel = new ButtonType("No", ButtonBar.ButtonData.NO);
@@ -196,6 +210,9 @@ public class TravelExpertsHandler {
         confirmCancel.setContentText("Are you sure you want to cancel?");
         confirmCancel.getButtonTypes().setAll(yesConfirmCancel, noConfirmCancel);
 
+        /**
+         * Create a new save alert
+         */
         Alert confirmSave = new Alert(Alert.AlertType.CONFIRMATION);
         ButtonType yesConfirmSave = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noConfirmSave = new ButtonType("No", ButtonBar.ButtonData.NO);
@@ -203,20 +220,32 @@ public class TravelExpertsHandler {
         confirmSave.setContentText("Confirm save? Ensure all information is correct.");
         confirmSave.getButtonTypes().setAll(yesConfirmSave, noConfirmSave);
 
+        /**
+         * Change the text of the save alert if it is a delete function
+         */
         if(function.equalsIgnoreCase("delete")) {
             confirmSave.setTitle("Confirm Delete");
             confirmSave.setContentText("Confirm delete? This cannot be undone!");
         }
 
+        /**
+         * Create a new stage
+         */
         Stage stage = new Stage();
         stage.setTitle("Travel Experts - " + tableName);
         stage.setResizable(false);
 
+        /**
+         * Create 35% - 65% column constraints for the grid pane
+         */
         ColumnConstraints columnConstraints1 = new ColumnConstraints();
         ColumnConstraints columnConstraints2 = new ColumnConstraints();
         columnConstraints1.setPercentWidth(35);
         columnConstraints2.setPercentWidth(65);
 
+        /**
+         * Create a new grid view
+         */
         GridPane pane = new GridPane();
         pane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2);
         pane.setPadding(new Insets(10));
@@ -224,21 +253,36 @@ public class TravelExpertsHandler {
         pane.setPrefHeight(260);
         pane.setVgap(10);
 
+        /**
+         * Loop through the columns and add the appropriate labels and text fields
+         */
         for (int i = 0; i < columns.size(); i++) {
             String labelText = columns.get(i).getText();
             Label label = new Label(labelText);
             TextField text = new TextField();
             text.setId(labelText);
+            /**
+             * If the function is add, add text to the text fields
+             */
             if(!function.equalsIgnoreCase("add") && selectedItem != null && selectedItem.get(i) != null) {
                 text.setText(selectedItem.get(i).toString());
             }
+            /**
+             * If the function is view, set the text fields to un-editable
+             */
             if (i == 0 || function.equalsIgnoreCase("view") || function.equalsIgnoreCase("delete")) {
                 text.setEditable(false);
             }
+            /**
+             * Add the labels and text fields to the grid pane
+             */
             pane.add(label, 0, i);
             pane.add(text, 1, i);
         }
 
+        /**
+         * Create a new save button
+         */
         Button buttonSave = new Button("Save");
         if(function.equalsIgnoreCase("view")) {
             buttonSave.setDisable(true);
@@ -247,6 +291,10 @@ public class TravelExpertsHandler {
         }
         buttonSave.setStyle("-fx-background-radius: 0");
         buttonSave.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Loop through the text fields and add them to an array, then execute SQL statements
+             * @param actionEvent
+             */
             @Override
             public void handle(ActionEvent actionEvent) {
                 confirmSave.showAndWait().ifPresent(type -> {
@@ -361,45 +409,18 @@ public class TravelExpertsHandler {
         button.setDisable(disabled);
     }
 
-    /**
-     * -> handleViewEvent()
-     * > desc <
-     * @param columns
-     * @param selectedItem
-     * > author <
-     */
     public void handleViewEvent(ObservableList<? extends TableColumn<?,?>> columns, String tableName, ObservableList<?> selectedItem, ChoiceBox choiceBoxTable, TableView tableViewTable) {
         createNewView("view", tableName, columns, selectedItem, choiceBoxTable, tableViewTable);
     }
 
-    /**
-     * -> handleAddEvent()
-     * > desc <
-     *
-     * @param columns
-     */
     public void handleAddEvent(ObservableList<? extends TableColumn<?,?>> columns, String tableName, ChoiceBox choiceBoxTable, TableView tableViewTable) {
         createNewView("add", tableName, columns, null, choiceBoxTable, tableViewTable);
     }
 
-    /**
-     * -> handleEditEvent()
-     * > desc <
-     * @param columns
-     * @param selectedItem
-     * > author <
-     */
     public void handleEditEvent(ObservableList<? extends TableColumn<?,?>> columns, String tableName, ObservableList<?> selectedItem, ChoiceBox choiceBoxTable, TableView tableViewTable) {
         createNewView("edit", tableName, columns, selectedItem, choiceBoxTable, tableViewTable);
     }
 
-    /**
-     * -> handleDeleteEvent()
-     * > desc <
-     *
-     * @param selectedItem
-     * > author <
-     */
     public void handleDeleteEvent(ObservableList<? extends TableColumn<?,?>> columns, String tableName, ObservableList<?> selectedItem, ChoiceBox choiceBoxTable, TableView tableViewTable) {
         createNewView("delete", tableName, columns, selectedItem, choiceBoxTable, tableViewTable);
     }

@@ -6,13 +6,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import org.kordamp.bootstrapfx.BootstrapFX;
-import org.kordamp.bootstrapfx.scene.layout.Panel;
-
 /**
  * TravelExpertsMaintenance.java
- * The entry point to our database application.
- * James B., Ali H., Trevor P., Evan D.
+ * The entry point to the database application.
+ * James B
  * Fall 2022
  */
 public class TravelExpertsMaintenance extends Application {

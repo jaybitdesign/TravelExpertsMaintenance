@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * DatabaseConnection.java
  * Helper functions to access our database information more conveniently.
- * James B., Ali H., Trevor P., Evan D.
+ * James B
  * Fall 2022
  */
 public class DatabaseConnection {
@@ -19,7 +19,7 @@ public class DatabaseConnection {
     private static final String PASS = "password";
 
     /**
-     * -> getConnection
+     * -> getConnection()
      * @return Connection to our database by using our defined arguments.
      * James B.
      */

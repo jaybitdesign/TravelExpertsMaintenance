@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * TravelExpertsController.java
  * Directs the handling of events and defines FXML elements.
- * James B., Ali H., Trevor P., Evan D.
+ * James B
  * Fall 2022
  */
 public class TravelExpertsController {
@@ -86,22 +86,18 @@ public class TravelExpertsController {
         });
 
         buttonView.setOnAction(actionEvent -> {
-            // TODO View selected record
             handler.handleViewEvent(tableViewTable.getColumns(), choiceBoxTable.getSelectionModel().getSelectedItem().toString(), tableViewTable.getSelectionModel().getSelectedItem(), choiceBoxTable, tableViewTable);
         });
 
         buttonAdd.setOnAction(actionEvent -> {
-            // TODO Add new record
             handler.handleAddEvent(tableViewTable.getColumns(), choiceBoxTable.getSelectionModel().getSelectedItem().toString(), choiceBoxTable, tableViewTable);
         });
 
         buttonEdit.setOnAction(actionEvent -> {
-            // TODO Edit selected record
             handler.handleEditEvent(tableViewTable.getColumns(), choiceBoxTable.getSelectionModel().getSelectedItem().toString(), tableViewTable.getSelectionModel().getSelectedItem(), choiceBoxTable, tableViewTable);
         });
 
         buttonDelete.setOnAction(actionEvent -> {
-            // TODO Delete selected record
             handler.handleDeleteEvent(tableViewTable.getColumns(), choiceBoxTable.getSelectionModel().getSelectedItem().toString(), tableViewTable.getSelectionModel().getSelectedItem(), choiceBoxTable, tableViewTable);
         });
     }
